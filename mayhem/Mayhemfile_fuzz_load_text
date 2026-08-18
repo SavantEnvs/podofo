@@ -1,0 +1,13 @@
+project: savantenvs/podofo
+target: fuzz_load_text
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/fuzz_load_text/testsuite
+cmds:
+  - cmd: /mayhem/fuzz_load_text
+    libfuzzer: true
+
+    # The dict is baked in by `COPY . /mayhem`, so it lives at /mayhem/mayhem/<t>/<t>.dict.
+    # It was committed but never referenced -- the silent "present but unwired" case:
+    # libFuzzer simply fuzzes without it, so nothing fails and the loss is invisible.
+    dictionary: /mayhem/mayhem/fuzz_load_text/fuzz_load_text.dict
